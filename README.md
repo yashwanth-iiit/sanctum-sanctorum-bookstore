@@ -1,9 +1,12 @@
 # Sanctum Sanctorum — Members' Bookstore
 
 A small backend for a members-only clubhouse bookstore. Members can **buy** books and
-**borrow** them from the club library. The codebase is only partly finished. Your job is
+**borrow** them from the club library. The required backend is implemented and locally verified. The original exercise is
 described in [ASSIGNMENT.md](ASSIGNMENT.md), and how the exercise runs — timeline, grading,
 Git, deployment and AI usage — is in [INSTRUCTIONS.md](INSTRUCTIONS.md).
+
+See [NOTES.md](NOTES.md) for implementation results, [IMPLEMENTATION_PLAN.md](IMPLEMENTATION_PLAN.md)
+for architecture and workflows, and [DEPLOYMENT.md](DEPLOYMENT.md) for publishing instructions.
 
 ## Quick start
 
@@ -125,6 +128,7 @@ SPEC.md          the full API specification
 
 ```
 uv run pytest                          # everything
+uv run --frozen pytest tests verification # acceptance and additional integrity checks
 uv run pytest tests/test_orders.py     # one file
 uv run pytest -k late_fee -x           # by name, stop at first failure
 ```
@@ -133,5 +137,5 @@ uv run pytest -k late_fee -x           # by name, stop at first failure
 with your virtual environment activated.)
 
 Each test gets a fresh in-memory database and a **frozen clock** (`clock.advance(days=15)`),
-so tests are fast and deterministic. Endpoints that haven't been built yet return
-`501 Not implemented`.
+so tests are fast and deterministic. Additional checks in `verification/` cover rollback,
+contract boundaries, startup, and persistent database restarts. The supplied `tests/` remain unchanged.

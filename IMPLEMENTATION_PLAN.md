@@ -2,7 +2,7 @@
 
 Prepared: 22 September 2026.
 
-Status: planning complete; application implementation and test execution have not started. This plan describes intended work, not completed functionality.
+Status updated 27 September 2026: required local implementation is complete. All 202 supplied acceptance tests and 45 additional checks pass. Browser workflows are verified. Public deployment and GitHub publishing await accounts and destination URLs; see NOTES.md for actual results and limitations.
 
 ## 1. Objective and authoritative requirements
 
@@ -449,7 +449,7 @@ uv sync
 uv run pytest
 ```
 
-Record baseline passed/failed/error counts and the execution environment before fixing code. Planning inspection found 152 declared test functions across six files; parametrization generates more test cases. This is not a pass count, and the test suite has not yet been executed for this plan.
+Baseline execution of the untouched import produced 73 passed, 125 failed, and 4 setup errors across 202 cases. The completed implementation passes all 202 supplied cases and 45 additional checks; execution details are recorded in NOTES.md.
 
 ### Feature gates
 
@@ -567,19 +567,19 @@ Preserve actual work history. Do not manufacture commits after the fact to imply
 
 ## 14. Final submission definition of done
 
-- [ ] All required endpoints implement the specification; no required path still reaches a NotImplementedError stub.
-- [ ] Validation, error precedence, response fields, price snapshots, stock, and time boundaries are correct.
-- [ ] Business logic is in services; routers remain thin; input normalization is in schemas.
-- [ ] Supplied tests remain unchanged and run locally without external services.
-- [ ] Actual final test counts, failures, and limitations are recorded honestly.
-- [ ] Existing web UI starts locally and works against the API.
+- [x] All required endpoints implement the specification; no required path still reaches a NotImplementedError stub.
+- [x] Validation, error precedence, response fields, price snapshots, stock, and time boundaries pass the verified cases.
+- [x] Business logic is in services; routers remain thin; input normalization is in schemas.
+- [x] Supplied tests remain unchanged and run locally without external services.
+- [x] Actual final test counts, failures, and limitations are recorded honestly.
+- [x] Existing web UI starts locally and works against the API.
 - [ ] A publicly reachable deployment works in a fresh browser and retains expected data across restarts.
 - [ ] The public source repository is accessible while logged out.
-- [ ] Supplied ZIP snapshot is preserved in the initial commit; absence of upstream Git history is disclosed in NOTES without implying author approval of an exception.
-- [ ] Commits are incremental and meaningful; no secrets, environments, caches, or database files are committed.
+- [x] Supplied ZIP snapshot is preserved in the initial commit; absence of upstream Git history is disclosed in NOTES without implying author approval of an exception.
+- [x] Commits are incremental and meaningful; no secrets, environments, caches, or database files are committed.
 - [ ] `NOTES.md` starts with the live URL and includes verified instructions for using the demo.
-- [ ] `NOTES.md` explains completed/unfinished work, architecture, trade-offs, ambiguous requirements, testing, and deployment decisions.
-- [ ] `NOTES.md` has an AI usage section with the actual tools used, what they helped with, and a real reviewed/corrected suggestion; do not invent an anecdote.
+- [x] `NOTES.md` explains completed/unfinished work, architecture, trade-offs, ambiguous requirements, testing, and deployment decisions.
+- [x] `NOTES.md` has an AI usage section with the actual tools used, what they helped with, and a real reviewed/corrected suggestion; do not invent an anecdote.
 - [ ] Every submitted change can be explained in a follow-up discussion.
 
 ## 15. Suggested NOTES.md outline
@@ -605,4 +605,4 @@ Demo access: <verified member IDs and steps>
 ## What I would improve with more time
 ```
 
-The first coding step is to establish the test baseline and complete the book functionality. The local Git repository is ready; the public GitHub destination can be configured when available.
+The implementation and local verification are complete. The remaining submission steps are to create the public GitHub destination, deploy using a persistent database volume, verify the public URLs, and record those URLs in NOTES.md.

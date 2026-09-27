@@ -1,7 +1,7 @@
 # Submission notes
 
 Live URL: pending — no hosting account or public deployment exists yet.
-Repository URL: pending — the local Git repository has no remote configured.
+Repository URL: https://github.com/yashwanth-iiit/sanctum-sanctorum-bookstore
 
 The required application is implemented and locally verified. This is not yet a publicly deployed submission. See DEPLOYMENT.md for local startup, container deployment, and GitHub publishing steps.
 

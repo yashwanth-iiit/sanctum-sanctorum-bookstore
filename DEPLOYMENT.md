@@ -4,8 +4,12 @@ The API and supplied frontend run together as one Python service. No additional
 application dependencies are required. The container uses the existing lockfile
 and SQLite stored at `/data/sanctum.db`.
 
-Public publishing is pending: no GitHub destination or hosting account has been
-provided. Localhost verification is not a public deployment.
+Public application: https://yashwanthbk.alwaysdata.net/
+Public repository: https://github.com/yashwanth-iiit/sanctum-sanctorum-bookstore
+
+The application is deployed on Alwaysdata's Free personal plan with persistent
+SQLite storage. Public endpoints and data retention after a service restart
+were verified on 27 September 2026.
 
 ## Local development and verification
 
@@ -113,7 +117,8 @@ existing locked dependencies using uv:
 ```bash
 git clone https://github.com/yashwanth-iiit/sanctum-sanctorum-bookstore.git
 cd sanctum-sanctorum-bookstore
-uv sync --frozen --no-dev
+UV_CONCURRENT_DOWNLOADS=1 UV_CONCURRENT_INSTALLS=1 UV_CONCURRENT_BUILDS=1 \
+  uv sync --frozen --no-dev --no-cache --python python3.12
 ```
 
 Create a **User program** site with its account-provided public address and this
@@ -126,6 +131,12 @@ sh /home/ACCOUNT/sanctum-sanctorum-bookstore/deploy/alwaysdata-start.sh
 The provider supplies IP and PORT. The script keeps the SQLite database in
 `$HOME/sanctum-data`, outside the source checkout. Use one process. After updates,
 pull the repository and restart the site; verify existing records persist.
+
+The deployed account is `yashwanthbk`, its source checkout is
+`/home/yashwanthbk/sanctum-sanctorum-bookstore`, and its SQLite file is
+`/home/yashwanthbk/sanctum-data/sanctum.db`. The successful installation used uv
+0.10.10 with reduced concurrency on the resource-limited free plan. This is a
+deployment tool, not an added application dependency.
 
 References: [free plan](https://www.alwaysdata.com/en/offers/) and
 [ASGI configuration](https://help.alwaysdata.com/en/docs/web-hosting/languages/python/configuration/).

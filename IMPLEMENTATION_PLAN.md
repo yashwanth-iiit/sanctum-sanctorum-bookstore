@@ -2,7 +2,7 @@
 
 Prepared: 22 September 2026.
 
-Status updated 27 September 2026: required local implementation is complete. All 202 supplied acceptance tests and 45 additional checks pass. Browser workflows are verified. Public deployment and GitHub publishing await accounts and destination URLs; see NOTES.md for actual results and limitations.
+Status updated 27 September 2026: implementation is complete; 202 supplied acceptance tests and 45 additional checks pass. The application is publicly deployed on Alwaysdata's free plan with verified persistent SQLite storage, and the full Git history is published to GitHub. See NOTES.md for URLs, results, and limitations.
 
 ## 1. Objective and authoritative requirements
 
@@ -560,10 +560,10 @@ Preserve actual work history. Do not manufacture commits after the fact to imply
 | Loan status | Derived from timestamps at read time | Use strict overdue boundary everywhere |
 | Aggregate strategy | Separate collections before combining statistics | Avoid join multiplication |
 | Original Git source | Unknown; ZIP contains a possible commit ID; untouched snapshot now committed locally | Document ZIP provenance in NOTES; publish subsequent work to the user's own repository |
-| PostgreSQL versus dependency restriction | Unresolved assignment ambiguity | Clarify if a driver is allowed, or choose persistent SQLite hosting |
-| Extra tests versus immutable `tests/` | Preserve supplied directory | Use separate optional tests or clarify author intent |
+| PostgreSQL versus dependency restriction | Persistent SQLite on the free host preserves the existing dependencies | A PostgreSQL migration would need an explicit driver decision |
+| Extra tests versus immutable `tests/` | Supplied directory unchanged; 45 checks added in verification/ | Keep both suites in verification commands |
 | Concurrent requests | Optional hardening beyond baseline transaction work | Complete required work first and disclose limits |
-| Deployment provider | Not selected by this plan | Verify current capabilities and constraints before choosing |
+| Deployment provider | Alwaysdata Free with persistent SQLite; live and restart verified | Monitor account limits and maintain backups |
 
 ## 14. Final submission definition of done
 
@@ -573,11 +573,11 @@ Preserve actual work history. Do not manufacture commits after the fact to imply
 - [x] Supplied tests remain unchanged and run locally without external services.
 - [x] Actual final test counts, failures, and limitations are recorded honestly.
 - [x] Existing web UI starts locally and works against the API.
-- [ ] A publicly reachable deployment works in a fresh browser and retains expected data across restarts.
-- [ ] The public source repository is accessible while logged out.
+- [x] A publicly reachable deployment works in a fresh browser and retains expected data across restarts.
+- [x] The public source repository is accessible while logged out.
 - [x] Supplied ZIP snapshot is preserved in the initial commit; absence of upstream Git history is disclosed in NOTES without implying author approval of an exception.
 - [x] Commits are incremental and meaningful; no secrets, environments, caches, or database files are committed.
-- [ ] `NOTES.md` starts with the live URL and includes verified instructions for using the demo.
+- [x] `NOTES.md` starts with the live URL and includes verified instructions for using the demo.
 - [x] `NOTES.md` explains completed/unfinished work, architecture, trade-offs, ambiguous requirements, testing, and deployment decisions.
 - [x] `NOTES.md` has an AI usage section with the actual tools used, what they helped with, and a real reviewed/corrected suggestion; do not invent an anecdote.
 - [ ] Every submitted change can be explained in a follow-up discussion.
@@ -605,4 +605,4 @@ Demo access: <verified member IDs and steps>
 ## What I would improve with more time
 ```
 
-The implementation and local verification are complete. The remaining submission steps are to create the public GitHub destination, deploy using a persistent database volume, verify the public URLs, and record those URLs in NOTES.md.
+Implementation, verification, public deployment, and GitHub publishing are complete. The remaining handoff is to send the submission links and notes before the deadline, and review the code for the follow-up discussion.

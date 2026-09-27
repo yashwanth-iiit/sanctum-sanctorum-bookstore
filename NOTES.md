@@ -1,13 +1,15 @@
 # Submission notes
 
-Live URL: pending — no hosting account or public deployment exists yet.
+Live URL: https://yashwanthbk.alwaysdata.net/
 Repository URL: https://github.com/yashwanth-iiit/sanctum-sanctorum-bookstore
 
-The required application is implemented and locally verified. This is not yet a publicly deployed submission. See DEPLOYMENT.md for local startup, container deployment, and GitHub publishing steps.
+The required application is implemented, tested, and publicly deployed on Alwaysdata's free personal plan. The public GitHub repository preserves the incremental history. See DEPLOYMENT.md for startup and maintenance instructions.
 
 ## Demo access
 
-Run `uv sync --frozen`, then `uv run uvicorn app.main:app --reload`, and open http://localhost:8000. A fresh database contains Wong Li (id 1, supreme), Christine Palmer (id 2, master), Jonathan Pangborn (id 3, adept), and Sara Lin (id 4, apprentice). Select a member in the interface, browse books, create and pay or cancel orders, borrow and return books, and inspect member statistics and sales reports. There is no authentication or real payment processing in this exercise.
+Open the live URL and click **Sign in as member**. Enter member ID **1** (Wong Li, supreme) or **2** (Christine Palmer, master), then click **Sign in**. IDs 3 and 4 are adept and apprentice members for checking tier restrictions. Browse books, create and pay or cancel orders, borrow and return books, and inspect member statistics and sales reports. There is no authentication or real payment processing in this exercise. The hosted database also contains a clearly named verification member, ID 5, and verification order history.
+
+For local use, run `uv sync --frozen`, then `uv run uvicorn app.main:app --reload`, and open http://localhost:8000.
 
 ## Completed functionality
 
@@ -47,11 +49,15 @@ The final Docker-format build also passed its configured container health check 
 
 ## Deployment and known limitations
 
-The Dockerfile uses the frozen runtime dependencies, a non-root user, configurable PORT, and SQLite under /data. A durable volume is required. DEPLOYMENT.md explains local containers and the steps needed for public hosting. No provider, hosting account, or GitHub remote has been selected.
+The public service runs Python 3.12.14 and the locked runtime packages on Alwaysdata's Free plan (1 GB persistent disk, 256 MB RAM, 0.25 CPU). Its User program site starts Uvicorn through deploy/alwaysdata-start.sh using the provider's IP and PORT. SQLite is stored at /home/yashwanthbk/sanctum-data/sanctum.db, outside the source checkout. This preserves the dependency restriction and avoids ephemeral container storage. Installation needed reduced uv download/install concurrency; the successful command is documented in DEPLOYMENT.md.
+
+Public HTTPS checks verified the health endpoint, catalogue, members, documentation, purchases, payment, cancellation restoring stock, borrowing, statistics, and sales. An actual hosting restart retained the created member, paid and cancelled orders, active loan, and inventory; the seed catalogue remained at 12 books. Repository access was verified without authentication. The Dockerfile remains available for container hosts with a durable /data volume.
+
+The public browser interface also displayed the persisted member statistics and sale, and returned the retained Darkhold loan with a zero fee. The verification order history is intentionally retained rather than erasing records after demonstrating persistence.
 
 Transactions protect each operation's atomicity. Optional protection against simultaneous stock reservations and conflicting state transitions has not been implemented. Optional member-list pagination has not been added. Existing databases with the starter's older loan table need an explicit schema migration or a separately chosen fresh demo database; create_all does not migrate tables and the application never deletes existing data automatically.
 
-The assignment's PostgreSQL suggestion conflicts with its prohibition on new dependencies: the frozen dependencies contain no PostgreSQL driver. Persistent SQLite avoids adding one. Public deployment, logged-out repository access, and public data retention still require verification after accounts are available.
+The assignment's PostgreSQL suggestion conflicts with its prohibition on new dependencies: the frozen dependencies contain no PostgreSQL driver. The free host's persistent SQLite storage avoids adding one. Keep one application process; this small public demo is not designed for horizontal scaling. Account limits and provider availability still apply.
 
 ## Git provenance
 
@@ -63,4 +69,4 @@ Codex inspected the supplied documents, prepared the implementation plan, implem
 
 A corrected suggestion was the initial emphasis on finding or cloning an upstream repository: the user clarified that the supplied ZIP should be implemented and published to their own GitHub repository. The local import preserves the actual available source without inventing upstream history. Browser inspection also exposed a Return button dispatch omission that backend tests could not detect, and it was repaired and checked through the interface.
 
-The candidate should review and understand the submitted code before discussing it with the reviewers. Further work would prioritize concurrency protection, explicit schema migrations, backups, and public deployment verification.
+The candidate should review and understand the submitted code before discussing it with the reviewers. Further work would prioritize concurrency protection, explicit schema migrations, backup recovery checks, and operational monitoring.

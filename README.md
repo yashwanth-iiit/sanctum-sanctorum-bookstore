@@ -1,5 +1,8 @@
 # Sanctum Sanctorum — Members' Bookstore
 
+**Live demo:** https://yashwanthbk.alwaysdata.net/ — select member ID 1 (supreme)
+or 2 (master) to try the workflows. Payments are simulated.
+
 A small backend for a members-only clubhouse bookstore. Members can **buy** books and
 **borrow** them from the club library. The required backend is implemented and locally verified. The original exercise is
 described in [ASSIGNMENT.md](ASSIGNMENT.md), and how the exercise runs — timeline, grading,

@@ -43,6 +43,8 @@ Browser verification covered master checkout ($39.99 subtotal, $3.99 discount, $
 
 The deployment image was built with Podman and run as its non-root user. A second container using the same named volume retained the created member, paid order, active loan, and reduced stock. The container served the UI, API documentation, health endpoint, and repaired frontend Return action. Its Python base provided version 3.12.14; runtime package versions came from the unchanged lockfile.
 
+The final Docker-format build also passed its configured container health check and read the preserved paid order. Disposable container checks were stopped afterward; the separate local browser preview remains available while its server is running.
+
 ## Deployment and known limitations
 
 The Dockerfile uses the frozen runtime dependencies, a non-root user, configurable PORT, and SQLite under /data. A durable volume is required. DEPLOYMENT.md explains local containers and the steps needed for public hosting. No provider, hosting account, or GitHub remote has been selected.

@@ -101,6 +101,35 @@ with the assignment author before switching. Merely changing the URL is
 insufficient: the starter's SQLite-specific connection options would also need
 to become conditional. No PostgreSQL support is claimed by this implementation.
 
+## Alwaysdata free hosting
+
+The free personal plan provides persistent disk storage, and its User program
+site type supports FastAPI through Uvicorn. Confirm the account's actual free
+plan before creating the site. No paid resources are needed for this demo.
+
+In the hosting account's terminal, clone the public repository and install the
+existing locked dependencies using uv:
+
+```bash
+git clone https://github.com/yashwanth-iiit/sanctum-sanctorum-bookstore.git
+cd sanctum-sanctorum-bookstore
+uv sync --frozen --no-dev
+```
+
+Create a **User program** site with its account-provided public address and this
+command, replacing ACCOUNT with the actual hosting account name:
+
+```bash
+sh /home/ACCOUNT/sanctum-sanctorum-bookstore/deploy/alwaysdata-start.sh
+```
+
+The provider supplies IP and PORT. The script keeps the SQLite database in
+`$HOME/sanctum-data`, outside the source checkout. Use one process. After updates,
+pull the repository and restart the site; verify existing records persist.
+
+References: [free plan](https://www.alwaysdata.com/en/offers/) and
+[ASGI configuration](https://help.alwaysdata.com/en/docs/web-hosting/languages/python/configuration/).
+
 ## Existing databases
 
 `create_all` creates missing tables; it does not migrate an older loan table to

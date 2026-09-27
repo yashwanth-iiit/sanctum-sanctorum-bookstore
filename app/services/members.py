@@ -3,9 +3,11 @@ from datetime import datetime
 from typing import List
 
 from fastapi import HTTPException
-from sqlalchemy import select
+from sqlalchemy import func, select
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
+from app.db import transaction
 from app.models import Member, MemberTier, Order
 from app.schemas import MemberCreate, MemberStats
 
@@ -23,7 +25,7 @@ RESTRICTED_MIN_TIER = MemberTier.MASTER.value
 
 def tier_at_least(tier: str, minimum: str) -> bool:
     """True if ``tier`` ranks at or above ``minimum``."""
-    return TIER_ORDER.index(tier) > TIER_ORDER.index(minimum)
+    return TIER_ORDER.index(tier) >= TIER_ORDER.index(minimum)
 
 
 def ensure_can_access_restricted(member: Member) -> None:
@@ -39,10 +41,17 @@ def create_member(db: Session, data: MemberCreate, now: datetime) -> Member:
 
     Rules: email (already stripped + lowercased) must be unique -> 409; created_at = now.
     """
-    # TODO: reject an email that is already in use with 409
+    existing_email = select(Member.id).where(func.lower(Member.email) == data.email)
+    if db.scalar(existing_email) is not None:
+        raise HTTPException(status_code=409, detail="Email already exists")
     member = Member(name=data.name, email=data.email, tier=data.tier.value, created_at=now)
-    db.add(member)
-    db.commit()
+    try:
+        with transaction(db):
+            db.add(member)
+    except IntegrityError as exc:
+        if db.scalar(existing_email) is not None:
+            raise HTTPException(status_code=409, detail="Email already exists") from exc
+        raise
     db.refresh(member)
     return member
 
